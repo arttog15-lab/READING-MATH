@@ -1,165 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Extension Test Harness</title>
-  <style>
-    :root { color-scheme: dark; }
-    html, body { height: 100%; margin: 0; background: #0b0b0f; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-    header {
-      position: sticky; top: 0; z-index: 5;
-      display: grid; gap: 10px;
-      padding: 12px; border-bottom: 1px solid #222;
-      background: rgba(11,11,15,.92); backdrop-filter: blur(8px);
-    }
-    .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-    input {
-      flex: 1; min-width: 260px;
-      padding: 10px 12px; border-radius: 10px; border: 1px solid #2a2a33;
-      background: #12121a; color: #fff; outline: none;
-    }
-    button {
-      padding: 10px 12px; border-radius: 10px; border: 0;
-      background: #2b6cff; color: #fff; cursor: pointer; font-weight: 700;
-    }
-    button.secondary { background: #2a2a33; }
-    button.danger { background: #ff3b3b; }
-    button:disabled { opacity: .6; cursor: not-allowed; }
-
-    #layout { height: calc(100% - 140px); display: grid; grid-template-columns: 1.2fr .8fr; gap: 12px; padding: 12px; }
-    #left, #right { border: 1px solid #222; border-radius: 14px; overflow: hidden; background: #0f0f16; }
-    #left { display: grid; grid-template-rows: auto 1fr; }
-    #right { display: grid; grid-template-rows: auto 1fr; }
-    .panelTitle { padding: 10px 12px; border-bottom: 1px solid #222; color: #d7d7e0; font-weight: 700; }
-    iframe { width: 100%; height: 100%; border: 0; background: #000; display: none; }
-    pre {
-      margin: 0; padding: 12px; overflow: auto; white-space: pre-wrap; word-break: break-word;
-      color: #cfd0da; font-size: 13px; line-height: 1.35;
-    }
-    code { background: #141422; padding: 2px 6px; border-radius: 6px; }
-    .hint { color: #b7b7c4; font-size: 13px; }
-  </style>
+    <meta charset="UTF-8">
+    <title id="tab-title">Learn Math/Reading - Student Portal</title>
+    <link rel="icon" href="https://www.google.com">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100vh; background: #f0f2f5; color: #333; font-family: 'Segoe UI', sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        #ui { text-align: center; border: 1px solid #ddd; padding: 30px; background: #fff; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 500px; z-index: 100; }
+        h1 { color: #2c3e50; font-size: 1.4em; margin-bottom: 15px; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        .section-label { font-size: 0.7em; color: #95a5a6; text-transform: uppercase; margin: 10px 0 5px; text-align: left; font-weight: bold; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        input { background: #f9f9f9; border: 1px solid #ccc; padding: 10px; width: 100%; box-sizing: border-box; border-radius: 5px; margin-bottom: 10px; outline: none; }
+        button { background: #3498db; color: #fff; border: none; padding: 8px; cursor: pointer; font-weight: 600; border-radius: 5px; font-size: 0.8em; transition: 0.2s; }
+        button:hover { background: #2980b9; transform: scale(1.02); }
+        .special { background: #27ae60; }
+        #host { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: none; z-index: 999; background: #000; }
+    </style>
 </head>
-<body>
-  <header>
-    <div class="row">
-      <input id="url" value="https://example.com" placeholder="Target URL (https://...)" />
-      <button id="fs" class="secondary">Toggle Fullscreen</button>
-      <button id="clear" class="secondary">Clear Log</button>
-    </div>
-    <div class="row">
-      <button id="loadFrame">Load in iframe</button>
-      <button id="openPopup" class="secondary">Open popup window</button>
-      <button id="redirectTop" class="danger">Redirect top page</button>
-      <button id="spaPush" class="secondary">SPA: pushState</button>
-      <button id="spaReplace" class="secondary">SPA: replaceState</button>
-    </div>
-    <div class="hint">
-      This page is for testing whether your extension detects: top-level navigation, iframes, popups, redirects, and SPA URL changes.
-      Some sites block iframes; if the iframe stays blank, that’s expected.
-    </div>
-  </header>
+<body oncontextmenu="return false;">
 
-  <div id="layout">
-    <div id="left">
-      <div class="panelTitle">Iframe View (if allowed)</div>
-      <iframe id="frame" allow="fullscreen"></iframe>
+    <div id="ui">
+        <h1>Academic Module Selection</h1>
+        
+        <div class="section-label">Mathematics & Logic</div>
+        <div class="grid">
+            <button onclick="boot('https://windows96.net')">Windows 96</button>
+            <button onclick="boot('https://www.mathplayground.com')">Math Games</button>
+            <button onclick="boot('https://poki.com')">Slope Logic</button>
+        </div>
+
+        <div class="section-label">Reading & Research</div>
+        <div class="grid">
+            <button onclick="boot('https://www.wikipedia.org')">Wiki Lab</button>
+            <button onclick="boot('https://archive.org')">History Lib</button>
+            <button onclick="boot('https://www.gutenberg.org')">Classic Lit</button>
+        </div>
+
+        <div class="section-label">Interactive Modules</div>
+        <div class="grid">
+            <button onclick="boot('https://classic.minecraft.net')">Minecraft JS</button>
+            <button onclick="boot('https://www.chess.com')">Chess AI</button>
+            <button onclick="boot('https://isbhack.github.io')">GBA Emulator</button>
+        </div>
+
+        <input type="text" id="target" placeholder="Paste custom module URL...">
+        <button onclick="boot(document.getElementById('target').value)" style="width:100%;" class="special">LAUNCH CUSTOM COMPONENT</button>
+        
+        <p style="font-size: 0.6em; color: #bdc3c7; margin-top: 10px;">Double ESC to clear session history</p>
     </div>
-    <div id="right">
-      <div class="panelTitle">Action Log</div>
-      <pre id="log"></pre>
-    </div>
-  </div>
 
-  <script>
-    const $ = (id) => document.getElementById(id);
-    const input = $("url");
-    const frame = $("frame");
-    const logEl = $("log");
+    <div id="host"></div>
 
-    function normalizeUrl(raw) {
-      const s = (raw || "").trim();
-      if (!s) return "";
-      if (!/^https?:\/\//i.test(s)) return "https://" + s;
-      return s;
-    }
+    <script>
+        function boot(url) {
+            if (!url) return;
+            let target = url;
 
-    function log(msg) {
-      const line = `[${new Date().toLocaleTimeString()}] ${msg}\n`;
-      logEl.textContent = line + logEl.textContent;
-      console.log(msg);
-    }
+            // 1. FORMAT FIXER
+            if (target.includes('://youtube.com')) target = target.replace('watch?v=', 'embed/');
+            if (!target.includes('://')) target = 'https://' + target;
 
-    async function toggleFullscreen() {
-      try {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-          log("Entered fullscreen (documentElement).");
-        } else {
-          await document.exitFullscreen();
-          log("Exited fullscreen.");
+            // 2. DISGUISE
+            document.title = "Google Docs - Academic Paper";
+            if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+
+            // 3. UI SWAP
+            document.getElementById('ui').style.display = 'none';
+            const hostDiv = document.getElementById('host');
+            hostDiv.style.display = 'block';
+
+            // 4. CLOSED SHADOW DOM (Blinds most extensions)
+            const shadow = hostDiv.attachShadow({mode: 'closed'});
+            const ifr = document.createElement('iframe');
+            
+            // Randomize the internal ID so your extension can't find a pattern
+            ifr.id = "module_" + Math.random().toString(36).substring(7);
+            ifr.src = target;
+            ifr.setAttribute('style', 'width:100vw;height:100vh;border:none;');
+            ifr.setAttribute('allow', 'autoplay; fullscreen; keyboard; gamepad');
+            
+            shadow.appendChild(ifr);
         }
-      } catch (e) {
-        log("Fullscreen failed (browser policy). Try F11.");
-      }
-    }
 
-    // Buttons
-    $("fs").addEventListener("click", toggleFullscreen);
-
-    $("clear").addEventListener("click", () => {
-      logEl.textContent = "";
-      log("Log cleared.");
-    });
-
-    $("loadFrame").addEventListener("click", () => {
-      const url = normalizeUrl(input.value);
-      if (!url) return;
-      frame.style.display = "block";
-      frame.src = url;
-      log(`Loaded in iframe: ${url}`);
-    });
-
-    $("openPopup").addEventListener("click", () => {
-      const url = normalizeUrl(input.value);
-      if (!url) return;
-      const w = window.open(url, "_blank", "noopener,noreferrer,width=1200,height=800");
-      log(w ? `Opened popup: ${url}` : "Popup blocked by browser.");
-    });
-
-    $("redirectTop").addEventListener("click", () => {
-      const url = normalizeUrl(input.value);
-      if (!url) return;
-      log(`Redirecting TOP page to: ${url}`);
-      // Top-level navigation (your extension should always see this)
-      location.href = url;
-    });
-
-    // SPA-style changes (doesn't actually navigate, only changes address bar)
-    function spaChange(mode) {
-      const url = normalizeUrl(input.value);
-      if (!url) return;
-
-      // Convert absolute URL to a path on THIS origin for demo purposes
-      // because pushState cannot change to a different origin.
-      const u = new URL(url);
-      const newPath = `/spa-test/${encodeURIComponent(u.host)}${u.pathname}${u.search}${u.hash}`;
-
-      if (mode === "push") history.pushState({ t: Date.now() }, "", newPath);
-      if (mode === "replace") history.replaceState({ t: Date.now() }, "", newPath);
-
-      log(`SPA ${mode}State -> ${location.href}`);
-    }
-
-    $("spaPush").addEventListener("click", () => spaChange("push"));
-    $("spaReplace").addEventListener("click", () => spaChange("replace"));
-
-    // Log navigation-related events on THIS page
-    window.addEventListener("popstate", () => log(`popstate -> ${location.href}`));
-    window.addEventListener("hashchange", () => log(`hashchange -> ${location.href}`));
-
-    log("Test harness ready.");
-  </script>
+        // 5. PANIC KEY
+        let escCount = 0;
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                escCount++;
+                if (escCount >= 2) {
+                    location.reload(); 
+                }
+            }
+        });
+    </script>
 </body>
 </html>
